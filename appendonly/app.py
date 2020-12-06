@@ -1,3 +1,4 @@
+import time
 from flask import Flask
 from flask import Response
 from flask import request
@@ -15,7 +16,8 @@ def append():
         if not line:
             return Response("No data GET arg provided", status=400)
 
-        line = line + '\n'
+        millis = int(round(time.time() * 1000))
+        line = '{},{}\n'.format(millis, line)
         try:
             with open(APPENDONLY_FILENAME, 'a') as outfile:
                 outfile.write(line)
